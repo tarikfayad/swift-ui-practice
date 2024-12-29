@@ -61,3 +61,6 @@ fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
 .DS_Store
+Hike/Hike-App/Students/Hike/.DS_Store
+Hike/.DS_Store
+Hike/Hike-App/.DS_Store
