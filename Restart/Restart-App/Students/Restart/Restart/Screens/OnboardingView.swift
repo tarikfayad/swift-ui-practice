@@ -15,6 +15,7 @@ struct OnboardingView: View {
     @State private var isAnimating: Bool = false
     @State private var imageOffset: CGSize = CGSize(width: 0, height: 0) // or .zero
     @State private var arrowOpacity: Double = 1.0
+    @State private var textTitle: String = "Share."
     
     var body: some View {
         ZStack {
@@ -25,9 +26,10 @@ struct OnboardingView: View {
                 // MARK: - HEADER
                 Spacer()
                 VStack(spacing: 20) {
-                    Text("Share.")
+                    Text(textTitle)
                         .font(.system(size: 60, weight: .heavy))
                         .foregroundStyle(.white)
+                        .transition(.opacity) // Animates the changing of text (text set to change in the drag gesture)
                     
                     Text("It's not how much we give but\nhow much love we put into giving.")
                         .font(.title3)
@@ -62,6 +64,7 @@ struct OnboardingView: View {
                                         
                                         withAnimation(.linear(duration: 0.25)) {
                                             arrowOpacity = 0
+                                            textTitle = "Give."
                                         }
                                     }
                                 }
@@ -70,6 +73,7 @@ struct OnboardingView: View {
                                     
                                     withAnimation(.linear(duration: 0.25)) {
                                         arrowOpacity = 1
+                                        textTitle = "Share."
                                     }
                                 }
                         )
