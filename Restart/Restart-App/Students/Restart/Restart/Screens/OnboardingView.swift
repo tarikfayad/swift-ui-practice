@@ -150,6 +150,7 @@ struct OnboardingView: View {
                                         } else {
                                             buttonOffset = buttonWidth - 80
                                             isOnboardingViewActive = false
+                                            playSound(sound: "chimeup", type: "mp3")
                                         }
                                     }
                                 })
@@ -168,6 +169,7 @@ struct OnboardingView: View {
         .onAppear(perform: {
             isAnimating = true // Begins animating on appearance
         })
+        .preferredColorScheme(.dark) // Setting status bar color preference
     }
 }
 
