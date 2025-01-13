@@ -12,6 +12,9 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var wishes: [Wish]
     
+    @State private var showAddWishSheet = false
+    @State private var newWishTitle: String = ""
+    
     var body: some View {
         NavigationStack {
             List {
@@ -22,14 +25,36 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Wishlist")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showAddWishSheet = true
+                    } label: {
+                        Image(systemName: "plus")
+                            .imageScale(.large)
+                    }
+                }
+            }
+            .alert("Create a New Wish", isPresented: $showAddWishSheet) {
+                TextField("Enter a wish!", text: $newWishTitle)
+                
+                Button {
+                    modelContext.insert(Wish(title: newWishTitle))
+                    newWishTitle = "" // Resetting the input value after saving the item.
+                } label:{
+                    Text("Save")
+                }.padding()
+                
+                Button(role: .cancel) {
+                } label:{
+                    Text("Cancel")
+                }.padding()
+            }
             .overlay{
                 if wishes.isEmpty {
                     ContentUnavailableView("My Wishlist", systemImage: "heart.circle", description: Text("No wishes yet. Add one to get started!"))
                 }
             }
-//            .onAppear {
-//                modelContext.fetch()
-//            }
         }
     }
 }
