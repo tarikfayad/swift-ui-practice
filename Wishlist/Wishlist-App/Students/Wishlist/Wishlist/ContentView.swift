@@ -13,16 +13,26 @@ struct ContentView: View {
     @Query private var wishes: [Wish]
     
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List {
+                ForEach(wishes) { wish in
+                    Text(wish.title)
+                }
+            }
+            .navigationTitle("Wishlist")
+            .overlay{
+                if wishes.isEmpty {
+                    ContentUnavailableView("My Wishlist", systemImage: "heart.circle", description: Text("No wishes yet. Add one to get started!"))
+                }
+            }
+//            .onAppear {
+//                modelContext.fetch()
+//            }
         }
-        .padding()
     }
 }
 
 #Preview {
     ContentView()
+        .modelContainer(for: Wish.self, inMemory: true) // Preview objects are simply held in memory. Not Saved.
 }
